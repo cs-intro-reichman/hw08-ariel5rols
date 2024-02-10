@@ -97,6 +97,7 @@ class PlayList {
     public int remove(int i) {
         if (i > tracks.size() || i < 0) {return -1;}
         tracks.remove(i);
+        return i;
     }
 
     /** Removes the first track that has the given title from this list.
