@@ -60,23 +60,25 @@ class PlayList {
     /** Returns the total duration (in seconds) of all the tracks in this list.*/
     public int totalDuration() {
         int counter = 0;
-        tracks.forEach((track) -> {
-            counter +=  track.getDuration(); 
-        });
+        for (Track track : tracks) {
+            counter += track.getDuration();
+        }
         return counter;
     }
+    
 
     /** Returns the index of the track with the given title in this list.
      *  If such a track is not found, returns -1. */
     public int indexOf(String title) {
-        int i = -1;
-        tracks.forEach((track) -> {
+        for (int i = 0; i < tracks.size(); i++) {
+            Track track = tracks.get(i);
             if (track.getTitle().equals(title)) {
-                i =  tracks.indexOf(track); 
+                return i;
             }
-        });
-        return i;
+        }
+        return -1;
     }
+    
 
     /** Inserts the given track in index i of this list. For example, if the list is
      *  (t5, t3, t1), then just after add(1,t4) the list becomes (t5, t4, t3, t1).
@@ -105,7 +107,7 @@ class PlayList {
         int i = -1;
         for (Track track : tracks) {
             if (track.getTitle().equals(title)) {
-                 i =  tracks.indexOf(track); 
+                i =  tracks.indexOf(track); 
                 break;
             }
         };
@@ -134,12 +136,19 @@ class PlayList {
      */
     private int minIndex(int start) {
         int shortestDuration = 99999;
-        Track shortestTrack;
-        tracks.stream().skip(start).forEach(track -> {
-            if (shortestDuration < track.getDuration()) {shortestDuration = track.getDuration(); shortestTrack = track;}
-        });
-        return tracks.indexOf(shortestTrack);
+        int shortestIndex = -1;
+    
+        for (int i = start; i < tracks.size(); i++) {
+            Track track = tracks.get(i);
+            if (shortestDuration > track.getDuration()) {
+                shortestDuration = track.getDuration();
+                shortestIndex = i;
+            }
+        }
+    
+        return shortestIndex;
     }
+    
 
     /** Returns the title of the shortest track in this list. 
      *  If the list is empty, returns null. */
