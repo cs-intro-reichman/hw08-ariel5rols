@@ -30,7 +30,7 @@ class PlayList {
 
     /** Method to get a track by index */
     public Track getTrack(int index) {
-        if (index >= 0 && index < size) {
+        if (index >= 0 && index <= size) {
             return tracks.get(index);
         } else {
             return null;
@@ -54,7 +54,7 @@ class PlayList {
 
     /** Removes the last track from this list. If the list is empty, does nothing. */
      public void removeLast() {
-        tracks.remove(-1);
+        tracks.remove(tracks.size() - 1);
     }
     
     /** Returns the total duration (in seconds) of all the tracks in this list.*/
@@ -87,8 +87,9 @@ class PlayList {
      *  is full, does nothing and returns false. Otherwise, inserts the track and
      *  returns true. */
     public boolean add(int i, Track track) {
-        //// replace the following statement with your code
-        return false;
+        if (i < 0 || i > tracks.size()) {return false;}
+        tracks.add(i, track);
+        return true;
     }
      
     /** Removes the track in the given index from this list.
