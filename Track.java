@@ -36,7 +36,7 @@ class Track {
     /** If this track's duration is shorter than the other track's duration
      *  returns true; otherwise returns false. */
     public boolean isShorterThan(Track other) {
-        return duration < other.duration;
+        return duration < other.getDuration();
     }
 
     // Returns a string that represents the totalSeconds as "minutes:seconds",
@@ -44,6 +44,6 @@ class Track {
     private String formattedDuration(int totalSeconds) {
         int minutes = totalSeconds/60;
         int seconds = totalSeconds%60;
-        return minutes + ":" + seconds;
+        return String.format("%s:%02s", minutes, seconds);
     }
 }

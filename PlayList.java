@@ -25,7 +25,7 @@ class PlayList {
     
     /** Returns the current number of tracks in this play list. */ 
     public int getSize() {
-        return size;
+        return tracks.size();
     }
 
     /** Method to get a track by index */
@@ -41,20 +41,27 @@ class PlayList {
      *  If the list is full, does nothing and returns false.
      *  Otherwise, appends the track and returns true. */
     public boolean add(Track track) {
-        if (tracks.size() <= maxSize) {tracks.add(track); return true;}
+        if (this.size < maxSize) {
+            this.tracks.add(track); 
+            this.size++;
+            return true;
+        }
         return false;
     }
 
     /** Returns the data of this list, as a string. Each track appears in a separate line. */
     //// For an efficient implementation, use StringBuilder.
     public String toString() {
-        //// replace the following statement with your code
-        return "";
+        String stringBuilder = "" ; 
+        for (int i = 0; i < this.size; i++) {
+            stringBuilder += "/n" + getTrack(i) ; 
+        }
+        return stringBuilder;
     }
 
     /** Removes the last track from this list. If the list is empty, does nothing. */
      public void removeLast() {
-        tracks.remove(tracks.size() - 1);
+        this.tracks.remove(tracks.size() - 1);
     }
     
     /** Returns the total duration (in seconds) of all the tracks in this list.*/
@@ -87,8 +94,9 @@ class PlayList {
      *  is full, does nothing and returns false. Otherwise, inserts the track and
      *  returns true. */
     public boolean add(int i, Track track) {
-        if (i < 0 || i > tracks.size()) {return false;}
-        tracks.add(i, track);
+        if (i < 0 || i > this.size || size == maxSize) {return false;}
+        this.tracks.add(i, track);
+        this.size++;
         return true;
     }
      
@@ -96,8 +104,9 @@ class PlayList {
      *  If the list is empty, or the given index is negative or too big for this list, 
      *  does nothing and returns -1. */
     public int remove(int i) {
-        if (i > tracks.size() || i < 0) {return -1;}
-        tracks.remove(i);
+        if (i > this.size || i < 0) {return -1;}
+        this.tracks.remove(i);
+        this.size = size - 1;
         return i;
     }
 
@@ -105,7 +114,6 @@ class PlayList {
      *  If such a track is not found, or the list is empty, or the given index
      *  is negative or too big for this list, does nothing. */
     public void remove(String title) {
-        Track trackToRemove;
         int i = -1;
         for (Track track : tracks) {
             if (track.getTitle().equals(title)) {
@@ -118,7 +126,7 @@ class PlayList {
 
     /** Removes the first track from this list. If the list is empty, does nothing. */
     public void removeFirst() {
-        if (tracks.size() != 0) {tracks.remove(0);}
+        if (tracks.size() != 0) {this.remove(0);}
     }
     
     /** Adds all the tracks in the other list to the end of this list. 
